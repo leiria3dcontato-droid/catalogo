@@ -2,7 +2,7 @@
 <html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
     <title>DecorReels - Decoração que Inspira</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
@@ -21,19 +21,26 @@
             background: #000;
             overflow: hidden;
             height: 100vh;
+            /* Respeita áreas seguras do iPhone/Android modernos */
+            padding-top: env(safe-area-inset-top);
+            padding-bottom: env(safe-area-inset-bottom);
         }
         
         ::-webkit-scrollbar { display: none; }
         
         .feed-container {
             height: 100vh;
+            height: 100dvh; /* Dynamic viewport height para mobile */
             overflow-y: scroll;
             scroll-snap-type: y mandatory;
             scroll-behavior: smooth;
+            /* Compensação para áreas seguras */
+            padding-bottom: env(safe-area-inset-bottom);
         }
         
         .product-card {
             height: 100vh;
+            height: 100dvh; /* Usa altura dinâmica disponível */
             width: 100vw;
             scroll-snap-align: start;
             position: relative;
@@ -41,6 +48,8 @@
             display: flex;
             flex-direction: column;
             overflow: hidden;
+            /* Garante que não ultrapasse a área segura */
+            padding-bottom: max(20px, env(safe-area-inset-bottom));
         }
         
         .media-wrapper {
@@ -102,15 +111,15 @@
             bottom: 0;
             left: 0;
             right: 0;
-            height: 55%;
-            background: linear-gradient(to top, rgba(0,0,0,0.95) 0%, rgba(0,0,0,0.4) 50%, transparent 100%);
+            height: 65%; /* Aumentado para cobrir mais a área inferior */
+            background: linear-gradient(to top, rgba(0,0,0,0.98) 0%, rgba(0,0,0,0.7) 30%, rgba(0,0,0,0.3) 60%, transparent 100%);
             pointer-events: none;
             z-index: 5;
         }
         
         .variant-dots {
             position: absolute;
-            bottom: 160px;
+            bottom: 180px; /* Aumentado de 160px */
             left: 50%;
             transform: translateX(-50%);
             display: flex;
@@ -132,27 +141,32 @@
             border-radius: 3px;
         }
         
+        /* ÁREA DE INFORMAÇÕES COM BORDA DE SEGURANÇA AUMENTADA */
         .product-info {
             position: absolute;
-            bottom: 90px;
+            bottom: 100px; /* Aumentado de 90px */
             left: 20px;
             right: 90px;
             color: white;
             z-index: 10;
+            /* Padding extra para segurança */
+            padding-bottom: env(safe-area-inset-bottom);
+            /* Garante que não fique colado na borda em telas pequenas */
+            margin-bottom: max(10px, env(safe-area-inset-bottom));
         }
         
         .product-title {
-            font-size: 28px;
+            font-size: 26px; /* Ligeiramente reduzido para caber melhor */
             font-weight: 800;
             margin-bottom: 8px;
             text-shadow: 0 2px 10px rgba(0,0,0,0.9);
             letter-spacing: -0.5px;
-            line-height: 1.1;
+            line-height: 1.2;
         }
         
         .product-description {
             font-size: 14px;
-            opacity: 0.85;
+            opacity: 0.9;
             line-height: 1.4;
             margin-bottom: 12px;
             display: -webkit-box;
@@ -170,14 +184,14 @@
         }
         
         .product-price {
-            font-size: 32px;
+            font-size: 30px; /* Ligeiramente reduzido */
             font-weight: 800;
             color: #4ade80;
             text-shadow: 0 2px 10px rgba(0,0,0,0.8);
         }
         
         .product-price .currency {
-            font-size: 20px;
+            font-size: 18px;
             font-weight: 600;
         }
         
@@ -201,14 +215,18 @@
             border: 1px solid rgba(255,255,255,0.3);
         }
         
+        /* BOTÕES DE AÇÃO COM MARGEM DE SEGURANÇA */
         .action-buttons {
             position: absolute;
             right: 16px;
-            bottom: 100px;
+            bottom: 110px; /* Aumentado de 100px */
             display: flex;
             flex-direction: column;
             gap: 16px;
             z-index: 20;
+            /* Padding de segurança */
+            padding-bottom: env(safe-area-inset-bottom);
+            margin-bottom: max(10px, env(safe-area-inset-bottom));
         }
         
         .action-btn {
@@ -253,6 +271,7 @@
             left: 0;
             right: 0;
             padding: 16px 20px;
+            padding-top: max(16px, env(safe-area-inset-top)); /* Respeita notch */
             display: flex;
             justify-content: space-between;
             align-items: center;
@@ -316,6 +335,9 @@
             display: none;
             flex-direction: column;
             animation: slideUp 0.35s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            /* Respeita áreas seguras */
+            padding-top: env(safe-area-inset-top);
+            padding-bottom: env(safe-area-inset-bottom);
         }
         
         .cart-modal.active { display: flex; }
@@ -327,6 +349,7 @@
         
         .cart-header {
             padding: 20px;
+            padding-top: max(20px, env(safe-area-inset-top));
             border-bottom: 1px solid rgba(255,255,255,0.1);
             display: flex;
             justify-content: space-between;
@@ -416,6 +439,7 @@
         
         .cart-footer {
             padding: 20px;
+            padding-bottom: max(20px, env(safe-area-inset-bottom)); /* Segurança extra */
             border-top: 1px solid rgba(255,255,255,0.1);
             background: rgba(0,0,0,0.9);
         }
@@ -444,6 +468,8 @@
             justify-content: center;
             gap: 10px;
             transition: all 0.2s ease;
+            /* Margem de segurança */
+            margin-bottom: env(safe-area-inset-bottom);
         }
         
         .whatsapp-btn:active {
@@ -460,6 +486,8 @@
             flex-direction: column;
             gap: 6px;
             z-index: 50;
+            /* Evita sobreposição com notch */
+            top: calc(50% + env(safe-area-inset-top) / 2);
         }
         
         .scroll-dot {
@@ -478,7 +506,7 @@
         
         .toast {
             position: fixed;
-            bottom: 100px;
+            bottom: calc(100px + env(safe-area-inset-bottom)); /* Ajustado para segurança */
             left: 50%;
             transform: translateX(-50%) translateY(100px);
             background: rgba(0,0,0,0.95);
@@ -516,6 +544,7 @@
             z-index: 9999;
             transition: opacity 0.5s ease;
             gap: 20px;
+            padding-bottom: env(safe-area-inset-bottom);
         }
         
         .loader.hidden {
@@ -557,6 +586,7 @@
             padding: 40px;
             text-align: center;
             display: none;
+            padding-bottom: env(safe-area-inset-bottom);
         }
         
         .error-state.active { display: flex; }
@@ -588,6 +618,42 @@
             font-size: 48px;
             margin-bottom: 16px;
             opacity: 0.5;
+        }
+        
+        /* Media queries para telas pequenas */
+        @media (max-height: 700px) {
+            .product-info {
+                bottom: 85px; /* Ajuste para telas menores */
+            }
+            .action-buttons {
+                bottom: 95px;
+            }
+            .product-title {
+                font-size: 24px;
+            }
+            .product-description {
+                font-size: 13px;
+                -webkit-line-clamp: 1; /* Menos texto em telas pequenas */
+            }
+        }
+        
+        /* iPhone SE e similares */
+        @media (max-height: 600px) {
+            .product-info {
+                bottom: 75px;
+            }
+            .action-buttons {
+                bottom: 85px;
+                gap: 12px;
+            }
+            .action-btn {
+                width: 46px;
+                height: 46px;
+            }
+            .action-btn.add-cart {
+                width: 52px;
+                height: 52px;
+            }
         }
         
         @media (min-width: 768px) {
@@ -646,7 +712,7 @@
         <div class="cart-footer">
             <div class="cart-total">
                 <span>Total</span>
-                <span id="cartTotal">R$ 0,00</span>
+                <span id="cartTotal">€ 0,00</span>
             </div>
             <button class="whatsapp-btn" onclick="sendToWhatsApp()">
                 <i class="fab fa-whatsapp"></i>
@@ -663,26 +729,23 @@
 
     <script>
         // ==========================================
-        // CONFIGURAÇÃO AIRTABLE - EDITE AQUI
+        // CONFIGURAÇÃO
         // ==========================================
         
         const AIRTABLE_CONFIG = {
-            // Substitua por suas credenciais do Airtable
-            API_KEY: 'patz3pPfxv4Ptkq6p.3dcf4acdf012fa340673919038bebed9f16c84f10d69b7baa100a4d542fd52ca', // Personal Access Token
-            BASE_ID: 'appKlSvikikTzy4uc', // ID da sua base
-            TABLE_NAME: 'Produtos', // Nome da tabela
-            
-            // URL da API (não altere)
+            API_KEY: 'patz3pPfxv4Ptkq6p.3dcf4acdf012fa340673919038bebed9f16c84f10d69b7baa100a4d542fd52ca',
+            BASE_ID: 'appKlSvikikTzy4uc',
+            TABLE_NAME: 'Produtos',
             get API_URL() {
                 return `https://api.airtable.com/v0/${this.BASE_ID}/${encodeURIComponent(this.TABLE_NAME)}`;
             }
         };
 
-        // Seu número de WhatsApp para pedidos
-        const WHATSAPP_NUMBER = '5511999999999';
+        const WHATSAPP_NUMBER = '351999999999'; // Formato Portugal: 351 + número
+        const CURRENCY_SYMBOL = '€';
 
         // ==========================================
-        // ESTADO GLOBAL
+        // ESTADO
         // ==========================================
         
         let products = [];
@@ -699,14 +762,13 @@
         });
 
         // ==========================================
-        // CARREGAMENTO AIRTABLE
+        // AIRTABLE
         // ==========================================
         
         async function loadProductsFromAirtable() {
             try {
                 showLoader(true);
                 
-                // Faz a requisição para Airtable
                 const response = await fetch(AIRTABLE_CONFIG.API_URL, {
                     method: 'GET',
                     headers: {
@@ -715,61 +777,44 @@
                     }
                 });
 
-                if (!response.ok) {
-                    throw new Error(`HTTP ${response.status}: ${response.statusText}`);
-                }
+                if (!response.ok) throw new Error(`HTTP ${response.status}`);
 
                 const data = await response.json();
-                
-                // Processa os dados do Airtable
                 products = processAirtableData(data.records);
                 
-                if (products.length === 0) {
-                    throw new Error('Nenhum produto ativo encontrado');
-                }
+                if (products.length === 0) throw new Error('Nenhum produto ativo');
 
-                // Renderiza os produtos
                 renderProducts();
                 setupScrollObserver();
                 createScrollIndicators();
                 
-                // Esconde loader
-                setTimeout(() => {
-                    showLoader(false);
-                }, 500);
+                setTimeout(() => showLoader(false), 500);
 
             } catch (error) {
-                console.error('Erro ao carregar do Airtable:', error);
+                console.error('Erro:', error);
                 showError();
             }
         }
 
         function processAirtableData(records) {
             return records
-                .filter(record => record.fields.Ativo !== false) // Só produtos ativos
-                .sort((a, b) => (a.fields.Ordem || 0) - (b.fields.Ordem || 0)) // Ordena
+                .filter(record => record.fields.Ativo !== false)
+                .sort((a, b) => (a.fields.Ordem || 0) - (b.fields.Ordem || 0))
                 .map(record => {
                     const fields = record.fields;
-                    
-                    // Processa imagens do attachment
                     const imagens = fields.Imagens || [];
                     const video = fields.Video ? fields.Video[0] : null;
                     
-                    // Processa cores (JSON ou formato simples)
                     let cores = [];
                     try {
-                        if (fields.Cores) {
-                            cores = JSON.parse(fields.Cores);
-                        }
+                        if (fields.Cores) cores = JSON.parse(fields.Cores);
                     } catch (e) {
-                        // Se não for JSON válido, ignora
-                        console.warn('Formato de cores inválido para:', fields.Nome);
+                        console.warn('JSON inválido:', fields.Nome);
                     }
 
-                    // Cria variações combinando imagens com cores
                     const variants = imagens.map((img, index) => ({
                         id: `${record.id}_${index}`,
-                        color: cores[index]?.hex || '#ccc',
+                        color: cores[index]?.hex || '#cccccc',
                         colorName: cores[index]?.nome || `Opção ${index + 1}`,
                         image: img.url,
                         thumbnail: img.thumbnails?.large?.url || img.url
@@ -777,14 +822,13 @@
 
                     return {
                         id: record.id,
-                        name: fields.Nome || 'Produto sem nome',
+                        name: fields.Nome || 'Produto',
                         description: fields.Descricao || '',
                         price: fields.Preco || 0,
                         video: video ? video.url : null,
-                        videoType: video ? video.type : null,
                         variants: variants.length > 0 ? variants : [{
                             id: `${record.id}_0`,
-                            color: '#ccc',
+                            color: '#cccccc',
                             colorName: 'Padrão',
                             image: 'https://via.placeholder.com/800x1200?text=Sem+Imagem',
                             thumbnail: 'https://via.placeholder.com/400?text=Sem+Imagem'
@@ -822,7 +866,7 @@
             card.dataset.index = index;
             card.dataset.productId = product.id;
 
-            const hasVideo = product.video && product.videoType?.includes('video');
+            const hasVideo = product.video;
             
             const variantsHTML = product.variants.map((variant, vIndex) => `
                 <div class="variant-slide" data-variant-index="${vIndex}">
@@ -865,7 +909,7 @@
                     <p class="product-description">${product.description}</p>
                     <div class="product-meta">
                         <div class="product-price">
-                            <span class="currency">R$</span> ${formatPrice(product.price)}
+                            <span class="currency">${CURRENCY_SYMBOL}</span> ${formatPrice(product.price)}
                         </div>
                         <div class="color-badge" id="badge-${product.id}">
                             <div class="color-badge-dot" style="background-color: ${product.variants[0].color}"></div>
@@ -888,7 +932,7 @@
         }
 
         // ==========================================
-        // GESTOS / SWIPE
+        // SWIPE
         // ==========================================
         
         function setupSwipe(card, productId) {
@@ -898,7 +942,6 @@
             wrapper.addEventListener('touchstart', handleTouchStart, { passive: true });
             wrapper.addEventListener('touchmove', handleTouchMove, { passive: true });
             wrapper.addEventListener('touchend', handleTouchEnd);
-            
             wrapper.addEventListener('mousedown', handleMouseDown);
 
             function handleTouchStart(e) {
@@ -1056,7 +1099,7 @@
                         <p>Seu cesto está vazio</p>
                     </div>
                 `;
-                document.getElementById('cartTotal').textContent = 'R$ 0,00';
+                document.getElementById('cartTotal').textContent = `${CURRENCY_SYMBOL} 0,00`;
                 return;
             }
 
@@ -1066,7 +1109,7 @@
                     <div class="cart-item-info">
                         <div class="cart-item-name">${item.name}</div>
                         <div class="cart-item-variant">${item.variantName} • Qtd: ${item.quantity}</div>
-                        <div class="cart-item-price">R$ ${formatPrice(item.price * item.quantity)}</div>
+                        <div class="cart-item-price">${CURRENCY_SYMBOL} ${formatPrice(item.price * item.quantity)}</div>
                     </div>
                     <button class="remove-item" onclick="removeFromCart(${index})">
                         <i class="fas fa-trash"></i>
@@ -1075,7 +1118,7 @@
             `).join('');
 
             const total = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
-            document.getElementById('cartTotal').textContent = `R$ ${formatPrice(total)}`;
+            document.getElementById('cartTotal').textContent = `${CURRENCY_SYMBOL} ${formatPrice(total)}`;
         }
 
         function toggleCart() {
@@ -1096,11 +1139,11 @@
                 message += `*${i + 1}. ${item.name}*%0A`;
                 message += `Cor: ${item.variantName}%0A`;
                 message += `Qtd: ${item.quantity}%0A`;
-                message += `Preço: R$ ${formatPrice(item.price * item.quantity)}%0A%0A`;
+                message += `Preço: ${CURRENCY_SYMBOL} ${formatPrice(item.price * item.quantity)}%0A%0A`;
             });
 
             const total = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
-            message += `*Total: R$ ${formatPrice(total)}*%0A%0A`;
+            message += `*Total: ${CURRENCY_SYMBOL} ${formatPrice(total)}*%0A%0A`;
             message += `Gostaria de finalizar a compra!`;
 
             window.open(`https://wa.me/${WHATSAPP_NUMBER}?text=${message}`, '_blank');
@@ -1112,7 +1155,7 @@
             if (navigator.share) {
                 navigator.share({
                     title: product.name,
-                    text: `Confira ${product.name} por R$ ${formatPrice(product.price)}`,
+                    text: `Confira ${product.name} por ${CURRENCY_SYMBOL} ${formatPrice(product.price)}`,
                     url: window.location.href
                 });
             } else {
@@ -1122,7 +1165,7 @@
         }
 
         // ==========================================
-        // SCROLL OBSERVER
+        // SCROLL
         // ==========================================
         
         function setupScrollObserver() {
@@ -1166,7 +1209,7 @@
         }
 
         // ==========================================
-        // UI HELPERS
+        // UI
         // ==========================================
         
         function showLoader(show) {
@@ -1181,7 +1224,10 @@
         }
 
         function formatPrice(price) {
-            return price.toFixed(2).replace('.', ',');
+            return price.toLocaleString('pt-PT', {
+                minimumFractionDigits: 2,
+                maximumFractionDigits: 2
+            });
         }
 
         function showToast(msg) {
